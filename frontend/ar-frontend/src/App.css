@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f4f4f4;
+}
+
+h1 {
+  padding: 12px;
+}
+
+.controls button {
+  margin: 6px;
+  padding: 10px 16px;
+  background: #111;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
