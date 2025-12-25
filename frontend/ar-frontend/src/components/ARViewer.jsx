@@ -40,7 +40,7 @@ const ARViewer = () => {
                 <div style={{ width: "15%", display: 'flex', justifyContent: 'center', marginLeft: '20px' }}>
                     <QRCode
                         size={200}
-                        value={"hello"}
+                        value={"https://arnxtt-qukm.vercel.app/"}
                         viewBox={`0 0 256 256`}
                     />
                 </div>
