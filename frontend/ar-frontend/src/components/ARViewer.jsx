@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import QRCode from "react-qr-code";
 import '@google/model-viewer';
+import { useEffect } from "react";
 
 
 const ARViewer = () => {
@@ -15,6 +16,10 @@ const ARViewer = () => {
     //     };
     //     material.pbrMetallicRoughness.setBaseColorFactor(colors[color]);
     //   };
+    const view = () => {
+  if (!viewerRef.current) return;
+  viewerRef.current.activateAR();
+};
 
     return (
         <>
@@ -39,6 +44,7 @@ const ARViewer = () => {
                         viewBox={`0 0 256 256`}
                     />
                 </div>
+                <button onClick={view}>View in AR</button>
             </div>
 
             {/* <div className="controls">
