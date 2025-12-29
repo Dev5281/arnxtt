@@ -54,11 +54,7 @@ const ARViewer = () => {
 
 
     if (set.diffuse) {
-      if (set.diffuse.includes('leather_brown')) {
-        material.pbrMetallicRoughness.setBaseColorFactor([0.4, 0.2, 0.1, 1]); // brown
-      } else {
-        material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]); // white
-      }
+      material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]);
       const diffuse = await viewerRef.current.createTexture(set.diffuse);
       material.pbrMetallicRoughness.baseColorTexture.setTexture(diffuse);
     }
