@@ -55,14 +55,6 @@ const ARViewer = () => {
             document.querySelector('#normals').addEventListener('input', (event) => {
                 createAndApplyTexture('normalTexture', event);
             });
-
-            document.querySelector('#occlusion').addEventListener('input', (event) => {
-                createAndApplyTexture('occlusionTexture', event);
-            });
-
-            document.querySelector('#emission').addEventListener('input', (event) => {
-                createAndApplyTexture('emissiveTexture', event);
-            });
         });
     }, []);
 
@@ -82,7 +74,7 @@ const ARViewer = () => {
                     ar-modes="webxr scene-viewer quick-look"
                     style={{ width: "60%", height: "70vh" }}
                 >
-                    <div className="controls" style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(255,255,255,0.8)', padding: '10px', borderRadius: '5px' }}>
+                    <div className="controls" style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(255,255,255,0.8)', padding: '10px', borderRadius: '5px', maxWidth: '200px' }}>
                         <div>
                             <p>Diffuse</p>
                             <select id="diffuse">
@@ -102,20 +94,6 @@ const ARViewer = () => {
                             <select id="normals">
                                 <option>None</option>
                                 <option value="/assets/textures/normal.jpg">Normal Texture</option>
-                            </select>
-                        </div>
-                        <div>
-                            <p>Occlusion</p>
-                            <select id="occlusion">
-                                <option>None</option>
-                                <option value="/assets/textures/occlusion.jpg">Occlusion Texture</option>
-                            </select>
-                        </div>
-                        <div>
-                            <p>Emission</p>
-                            <select id="emission">
-                                <option>None</option>
-                                <option value="/assets/textures/emission.jpg">Emission Texture</option>
                             </select>
                         </div>
                     </div>
