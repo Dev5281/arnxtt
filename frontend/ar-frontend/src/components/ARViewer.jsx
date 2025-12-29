@@ -31,28 +31,28 @@ const ARViewer = () => {
                 mr: "/assets/textures/fabric_blue_metallicRoughness.jpg",
             },
             leatherBrown: {
-                diffuse: "/assets/textures/leather-texture.jpg",
-                normal: "/assets/textures/leather-texture.jpg",
-                mr: "/assets/textures/leather-texture.jpg",
+                diffuse: "/assets/textures/leather_brown_diffuse.jpg",
+                normal: "/assets/textures/leather_brown_normal.jpg",
+                mr: "/assets/textures/leather_brown_metallicRoughness.jpg",
             }
         };
 
         const applyMaterialSet = async (set) => {
-            const material = viewerRef.current.model.materials[0];
+            for (const material of viewerRef.current.model.materials) {
+                if (set) {
+                    const diffuse = await viewerRef.current.createTexture(set.diffuse);
+                    const normal = await viewerRef.current.createTexture(set.normal);
+                    const mr = await viewerRef.current.createTexture(set.mr);
 
-            if (set) {
-                const diffuse = await viewerRef.current.createTexture(set.diffuse);
-                const normal = await viewerRef.current.createTexture(set.normal);
-                const mr = await viewerRef.current.createTexture(set.mr);
-
-                material.pbrMetallicRoughness.baseColorTexture.setTexture(diffuse);
-                material.normalTexture.setTexture(normal);
-                material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(mr);
-            } else {
-                // Clear textures
-                material.pbrMetallicRoughness.baseColorTexture.setTexture(null);
-                material.normalTexture.setTexture(null);
-                material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(null);
+                    material.pbrMetallicRoughness.baseColorTexture.setTexture(diffuse);
+                    material.normalTexture.setTexture(normal);
+                    material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(mr);
+                } else {
+                    // Clear textures
+                    material.pbrMetallicRoughness.baseColorTexture.setTexture(null);
+                    material.normalTexture.setTexture(null);
+                    material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(null);
+                }
             }
         };
 
