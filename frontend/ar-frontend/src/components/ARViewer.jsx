@@ -24,36 +24,46 @@ const ARViewer = () => {
     useEffect(() => {
         if (!viewerRef.current) return;
 
-        viewerRef.current.addEventListener("load", () => {
+        const materials = {
+            fabricBlue: {
+                diffuse: "/assets/textures/fabric_blue_diffuse.jpg",
+                normal: "/assets/textures/fabric_blue_normal.jpg",
+                mr: "/assets/textures/fabric_blue_metallicRoughness.jpg",
+            },
+            leatherBrown: {
+                diffuse: "/assets/textures/leather_brown_diffuse.jpg",
+                normal: "/assets/textures/leather_brown_normal.jpg",
+                mr: "/assets/textures/leather_brown_metallicRoughness.jpg",
+            }
+        };
+
+        const applyMaterialSet = async (set) => {
             const material = viewerRef.current.model.materials[0];
 
-            const createAndApplyTexture = async (channel, event) => {
-                if (event.target.value === "None") {
-                    if (channel.includes('base') || channel.includes('metallic')) {
-                        material.pbrMetallicRoughness[channel].setTexture(null);
-                    } else {
-                        material[channel].setTexture(null);
-                    }
+            if (set) {
+                const diffuse = await viewerRef.current.createTexture(set.diffuse);
+                const normal = await viewerRef.current.createTexture(set.normal);
+                const mr = await viewerRef.current.createTexture(set.mr);
+
+                material.pbrMetallicRoughness.baseColorTexture.setTexture(diffuse);
+                material.normalTexture.setTexture(normal);
+                material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(mr);
+            } else {
+                // Clear textures
+                material.pbrMetallicRoughness.baseColorTexture.setTexture(null);
+                material.normalTexture.setTexture(null);
+                material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(null);
+            }
+        };
+
+        viewerRef.current.addEventListener("load", () => {
+            document.querySelector('#materialSelect').addEventListener('input', (event) => {
+                const value = event.target.value;
+                if (value === "none") {
+                    applyMaterialSet(null);
                 } else {
-                    const texture = await viewerRef.current.createTexture(event.target.value);
-                    if (channel.includes('base') || channel.includes('metallic')) {
-                        material.pbrMetallicRoughness[channel].setTexture(texture);
-                    } else {
-                        material[channel].setTexture(texture);
-                    }
+                    applyMaterialSet(materials[value]);
                 }
-            };
-
-            document.querySelector('#diffuse').addEventListener('input', (event) => {
-                createAndApplyTexture('baseColorTexture', event);
-            });
-
-            document.querySelector('#metallicRoughness').addEventListener('input', (event) => {
-                createAndApplyTexture('metallicRoughnessTexture', event);
-            });
-
-            document.querySelector('#normals').addEventListener('input', (event) => {
-                createAndApplyTexture('normalTexture', event);
             });
         });
     }, []);
@@ -76,24 +86,11 @@ const ARViewer = () => {
                 >
                     <div className="controls" style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(255,255,255,0.8)', padding: '10px', borderRadius: '5px', maxWidth: '200px' }}>
                         <div>
-                            <p>Diffuse</p>
-                            <select id="diffuse">
-                                <option>None</option>
-                                <option value="/assets/textures/diffuse.jpg">Diffuse Texture</option>
-                            </select>
-                        </div>
-                        <div>
-                            <p>Metallic-Roughness</p>
-                            <select id="metallicRoughness">
-                                <option>None</option>
-                                <option value="/assets/textures/metallicRoughness.jpg">Metallic-Roughness Texture</option>
-                            </select>
-                        </div>
-                        <div>
-                            <p>Normals</p>
-                            <select id="normals">
-                                <option>None</option>
-                                <option value="/assets/textures/normal.jpg">Normal Texture</option>
+                            <p>Material Preset</p>
+                            <select id="materialSelect">
+                                <option value="none">None</option>
+                                <option value="fabricBlue">Fabric Blue</option>
+                                <option value="leatherBrown">Leather Brown</option>
                             </select>
                         </div>
                     </div>
