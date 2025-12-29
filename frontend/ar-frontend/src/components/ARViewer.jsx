@@ -26,7 +26,7 @@ const ARViewer = () => {
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <model-viewer
                     ref={viewerRef}
-                    src="/assets/models/1739779353165_chair (2).glb"
+                    src="/assets/models/sofa_chair.glb"
                     poster="/assets/posters/chair.webp"
                     // environment-image="/assets/environments/studio.hdr"
                     ar
