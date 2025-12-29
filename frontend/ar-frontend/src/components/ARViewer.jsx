@@ -81,44 +81,45 @@ const ARViewer = () => {
                     touch-action="pan-y"
                     ar-modes="webxr scene-viewer quick-look"
                     style={{ width: "60%", height: "70vh" }}
-                />
-                <div className="controls" style={{ marginLeft: '20px' }}>
-                    <div>
-                        <p>Diffuse</p>
-                        <select id="diffuse">
-                            <option>None</option>
-                            <option value="/assets/textures/diffuse.jpg">Diffuse Texture</option>
-                        </select>
+                >
+                    <div className="controls" style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(255,255,255,0.8)', padding: '10px', borderRadius: '5px' }}>
+                        <div>
+                            <p>Diffuse</p>
+                            <select id="diffuse">
+                                <option>None</option>
+                                <option value="/assets/textures/diffuse.jpg">Diffuse Texture</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>Metallic-Roughness</p>
+                            <select id="metallicRoughness">
+                                <option>None</option>
+                                <option value="/assets/textures/metallicRoughness.jpg">Metallic-Roughness Texture</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>Normals</p>
+                            <select id="normals">
+                                <option>None</option>
+                                <option value="/assets/textures/normal.jpg">Normal Texture</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>Occlusion</p>
+                            <select id="occlusion">
+                                <option>None</option>
+                                <option value="/assets/textures/occlusion.jpg">Occlusion Texture</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>Emission</p>
+                            <select id="emission">
+                                <option>None</option>
+                                <option value="/assets/textures/emission.jpg">Emission Texture</option>
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <p>Metallic-Roughness</p>
-                        <select id="metallicRoughness">
-                            <option>None</option>
-                            <option value="/assets/textures/metallicRoughness.jpg">Metallic-Roughness Texture</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p>Normals</p>
-                        <select id="normals">
-                            <option>None</option>
-                            <option value="/assets/textures/normal.jpg">Normal Texture</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p>Occlusion</p>
-                        <select id="occlusion">
-                            <option>None</option>
-                            <option value="/assets/textures/occlusion.jpg">Occlusion Texture</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p>Emission</p>
-                        <select id="emission">
-                            <option>None</option>
-                            <option value="/assets/textures/emission.jpg">Emission Texture</option>
-                        </select>
-                    </div>
-                </div>
+                </model-viewer>
                 <div style={{ width: "15%", display: 'flex', justifyContent: 'center', marginLeft: '20px' }}>
                     <QRCode
                         size={200}
