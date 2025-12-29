@@ -21,6 +21,51 @@ const ARViewer = () => {
   viewerRef.current.activateAR();
 };
 
+    useEffect(() => {
+        if (!viewerRef.current) return;
+
+        viewerRef.current.addEventListener("load", () => {
+            const material = viewerRef.current.model.materials[0];
+
+            const createAndApplyTexture = async (channel, event) => {
+                if (event.target.value === "None") {
+                    if (channel.includes('base') || channel.includes('metallic')) {
+                        material.pbrMetallicRoughness[channel].setTexture(null);
+                    } else {
+                        material[channel].setTexture(null);
+                    }
+                } else {
+                    const texture = await viewerRef.current.createTexture(event.target.value);
+                    if (channel.includes('base') || channel.includes('metallic')) {
+                        material.pbrMetallicRoughness[channel].setTexture(texture);
+                    } else {
+                        material[channel].setTexture(texture);
+                    }
+                }
+            };
+
+            document.querySelector('#diffuse').addEventListener('input', (event) => {
+                createAndApplyTexture('baseColorTexture', event);
+            });
+
+            document.querySelector('#metallicRoughness').addEventListener('input', (event) => {
+                createAndApplyTexture('metallicRoughnessTexture', event);
+            });
+
+            document.querySelector('#normals').addEventListener('input', (event) => {
+                createAndApplyTexture('normalTexture', event);
+            });
+
+            document.querySelector('#occlusion').addEventListener('input', (event) => {
+                createAndApplyTexture('occlusionTexture', event);
+            });
+
+            document.querySelector('#emission').addEventListener('input', (event) => {
+                createAndApplyTexture('emissiveTexture', event);
+            });
+        });
+    }, []);
+
     return (
         <>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -37,6 +82,43 @@ const ARViewer = () => {
                     ar-modes="webxr scene-viewer quick-look"
                     style={{ width: "60%", height: "70vh" }}
                 />
+                <div className="controls" style={{ marginLeft: '20px' }}>
+                    <div>
+                        <p>Diffuse</p>
+                        <select id="diffuse">
+                            <option>None</option>
+                            <option value="/assets/textures/diffuse.jpg">Diffuse Texture</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p>Metallic-Roughness</p>
+                        <select id="metallicRoughness">
+                            <option>None</option>
+                            <option value="/assets/textures/metallicRoughness.jpg">Metallic-Roughness Texture</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p>Normals</p>
+                        <select id="normals">
+                            <option>None</option>
+                            <option value="/assets/textures/normal.jpg">Normal Texture</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p>Occlusion</p>
+                        <select id="occlusion">
+                            <option>None</option>
+                            <option value="/assets/textures/occlusion.jpg">Occlusion Texture</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p>Emission</p>
+                        <select id="emission">
+                            <option>None</option>
+                            <option value="/assets/textures/emission.jpg">Emission Texture</option>
+                        </select>
+                    </div>
+                </div>
                 <div style={{ width: "15%", display: 'flex', justifyContent: 'center', marginLeft: '20px' }}>
                     <QRCode
                         size={200}
