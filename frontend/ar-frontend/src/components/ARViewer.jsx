@@ -59,7 +59,7 @@ const ARViewer = () => {
         const diffuse = await viewerRef.current.createTexture(set.diffuse);
         material.pbrMetallicRoughness.baseColorTexture.setTexture(diffuse);
       } else {
-        material.pbrMetallicRoughness.baseColorTexture.setTexture(null);
+        material.pbrMetallicRoughness.baseColorTexture.setTexture(originalBaseColors[i] ? originalBaseColors[i] : null);
       }
     }
 
