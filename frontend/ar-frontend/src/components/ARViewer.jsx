@@ -49,6 +49,7 @@ const ARViewer = () => {
 
 
     if (set.diffuse) {
+      material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]);
       const diffuse = await viewerRef.current.createTexture(set.diffuse);
       material.pbrMetallicRoughness.baseColorTexture.setTexture(diffuse);
     }
