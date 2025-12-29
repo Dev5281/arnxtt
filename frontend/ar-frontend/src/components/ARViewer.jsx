@@ -32,7 +32,7 @@ const ARViewer = () => {
             },
             leatherBrown: {
                 diffuse: "/assets/textures/leather_brown_texture1.jpg",
-                normal: null,
+                normal: "/assets/textures/leather_brown_texture1.jpg",
                 mr: null,
             }
         };
