@@ -32,29 +32,49 @@ const ARViewer = () => {
             },
             leatherBrown: {
                 diffuse: "/assets/textures/leather_brown_texture1.jpg",
-                normal: "/assets/textures/leather_brown_texture1.jpg",
+                normal: null,
                 mr: null,
             }
         };
 
-        const applyMaterialSet = async (set) => {
-            for (const material of viewerRef.current.model.materials) {
-                if (set) {
-                    const diffuse = await viewerRef.current.createTexture(set.diffuse);
-                    const normal = await viewerRef.current.createTexture(set.normal);
-                    const mr = await viewerRef.current.createTexture(set.mr);
+       const applyMaterialSet = async (set) => {
+  for (const material of viewerRef.current.model.materials) {
 
-                    material.pbrMetallicRoughness.baseColorTexture.setTexture(diffuse);
-                    material.normalTexture.setTexture(normal);
-                    material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(mr);
-                } else {
-                    // Clear textures
-                    material.pbrMetallicRoughness.baseColorTexture.setTexture(null);
-                    material.normalTexture.setTexture(null);
-                    material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(null);
-                }
-            }
-        };
+    if (!set) {
+      material.pbrMetallicRoughness.baseColorTexture.setTexture(null);
+      material.normalTexture.setTexture(null);
+      material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(null);
+      continue;
+    }
+
+
+    if (set.diffuse) {
+      const diffuse = await viewerRef.current.createTexture(set.diffuse);
+      material.pbrMetallicRoughness.baseColorTexture.setTexture(diffuse);
+    }
+
+    
+    if (set.normal) {
+      const normal = await viewerRef.current.createTexture(set.normal);
+      material.normalTexture.setTexture(normal);
+    } else {
+      material.normalTexture.setTexture(null);
+    }
+
+    
+    if (set.mr) {
+      const mr = await viewerRef.current.createTexture(set.mr);
+      material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(mr);
+    } else {
+      material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(null);
+
+      // IMPORTANT: leather defaults
+      material.pbrMetallicRoughness.setMetallicFactor(0);
+      material.pbrMetallicRoughness.setRoughnessFactor(0.7);
+    }
+  }
+};
+
 
         viewerRef.current.addEventListener("load", () => {
             document.querySelector('#materialSelect').addEventListener('input', (event) => {
