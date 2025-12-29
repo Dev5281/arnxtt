@@ -54,12 +54,13 @@ const ARViewer = () => {
 
 
     if (set.diffuse) {
-      material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]);
+      
       if (i === 1) { // Apply texture only to frame (assuming i=0 cushion, i=1 frame, i=2 legs)
+        material.pbrMetallicRoughness.setBaseColorFactor([1, 1, 1, 1]);
         const diffuse = await viewerRef.current.createTexture(set.diffuse);
         material.pbrMetallicRoughness.baseColorTexture.setTexture(diffuse);
       } else {
-        material.pbrMetallicRoughness.baseColorTexture.setTexture(originalBaseColors[i] ? originalBaseColors[i] : null);
+        material.pbrMetallicRoughness.baseColorTexture.setTexture(null);
       }
     }
 
