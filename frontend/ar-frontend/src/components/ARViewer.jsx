@@ -26,9 +26,9 @@ const ARViewer = () => {
 
         const materials = {
             fabricBlue: {
-                diffuse: "/assets/textures/fabric_blue_diffuse.jpg",
-                normal: "/assets/textures/fabric_blue_normal.jpg",
-                mr: "/assets/textures/fabric_blue_metallicRoughness.jpg",
+                diffuse: "/assets/textures/blue_texture.jpg",
+                normal: null,
+                mr: null,
             },
             leatherBrown: {
                 diffuse: "/assets/textures/leather_brown_texture1.jpg",
@@ -37,10 +37,15 @@ const ARViewer = () => {
             }
         };
 
-       const applyMaterialSet = async (set) => {
-  for (const material of viewerRef.current.model.materials) {
+        viewerRef.current.addEventListener("load", () => {
+            const originalBaseColors = viewerRef.current.model.materials.map(material => [...material.pbrMetallicRoughness.baseColorFactor]);
+
+            const applyMaterialSet = async (set) => {
+  for (let i = 0; i < viewerRef.current.model.materials.length; i++) {
+    const material = viewerRef.current.model.materials[i];
 
     if (!set) {
+      material.pbrMetallicRoughness.setBaseColorFactor(originalBaseColors[i]);
       material.pbrMetallicRoughness.baseColorTexture.setTexture(null);
       material.normalTexture.setTexture(null);
       material.pbrMetallicRoughness.metallicRoughnessTexture.setTexture(null);
@@ -80,8 +85,6 @@ const ARViewer = () => {
   }
 };
 
-
-        viewerRef.current.addEventListener("load", () => {
             document.querySelector('#materialSelect').addEventListener('input', (event) => {
                 const value = event.target.value;
                 if (value === "none") {
